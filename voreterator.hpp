@@ -12,7 +12,7 @@ public:
   {
     if (len < 0) {
       len = strlen(str);
-      if (len >= size) len = size - 1;
+      if (len > size) len = size;
     }
     
     stack = new group_t[max_length];
@@ -115,7 +115,7 @@ private:
         if (i == 0) {
           int cursize = len + strlen(data + len);
           if (cursize >= size) return -1;
-          memmove(data+1, data, cursize);
+          memmove(data+1, data, cursize+1);
           *data = first();
           len ++;
           return i;
