@@ -1,0 +1,70 @@
+¬орециратор - итератор вореционных c-v-слов
+
+ѕроверка и запуск примера:
+
+    make && ./example
+
+ѕростой пример. »терируем питуха, пока не закончитс€ буфер:
+
+    // #include "voreterator.hpp"
+    char buf[10] = "pitux";
+    voreterator<2, 1> v(buf, 10);
+
+    for (auto str : v)
+      std::cout << str << std::endl;
+
+ѕример посложнее. —клон€ем питуха по 22 падежам с артикл€ми:
+
+    char buf[10] = "vo pitux";
+    voreterator<1, 1> case_(buf, 2, 2); // итератор артикл€
+    voreterator<2, 1> word (buf+3, 7);  // итератор слова
+
+    for (auto str : case_) {
+      std::cout << str << std::endl;
+      ++word;
+    }
+
+
+»нтерпейс:
+
+  template <int consonant_limit=2, int vowel_limit=1>
+    в параметрах шаблона задаютс€ максимально допустимые
+    длины последовательностей согласных/гласных
+
+  voreterator (char * str, int max_length)
+    создать ворециратор над буфером str максимальным размером max_length
+  
+  voreterator (char * str, int max_length, int vorefix_length)
+    создать ворециратор над буфером str максимальным размером max_length,
+    начать с вореционировани€ vorefix_length символов
+    
+    например, имеетс€ строка zzy10, надо получить zzz10, aaaa10, ..., zzzzz10
+    значит vorefix_length=3, max_length=7
+  
+  voreterator& operator = (const voreterator& rhs)
+    стандартна€ питушн€
+  
+  bool operator == (const voreterator& rhs) const
+  bool operator != (const voreterator& rhs) const
+    сравнивают указатель на строку и флаг завершени€ генереций
+  
+  const char * operator * () const
+    строка (== str из коньструктора)
+  
+  voreterator& operator ++ ()
+    генераци€ нового слова
+  
+  operator bool () const
+    флаг завершени€ генереций (взводитс€, если max_length кончилась)
+  
+  voreterator begin() const
+    копи€ себ€ дл€ форычей
+  
+  voreterator end() const
+    ворециратор над той же строкой, но со взведЄнным флагом завершени€
+
+ оньтракт:
+
+  * ѕоведение не определено, если аргументы конструктора питушарские
+  * ѕоведение не определено, если итерировать завершЄнный ворециратор
+  * √арантирован багор, если итерировать ворециратор end()
