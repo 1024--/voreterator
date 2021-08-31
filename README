@@ -8,7 +8,7 @@
 
     // #include "voreterator.hpp"
     char buf[10] = "pitux";
-    voreterator<2, 1> v(buf, 10);
+    voreterator<2, 1> v(buf, 9);
 
     for (auto str : v)
       std::cout << str << std::endl;
@@ -17,7 +17,7 @@
 
     char buf[10] = "vo pitux";
     voreterator<1, 1> case_(buf, 2, 2); // итератор артикля
-    voreterator<2, 1> word (buf+3, 7);  // итератор слова
+    voreterator<2, 1> word (buf+3, 6);  // итератор слова
 
     for (auto str : case_) {
       std::cout << str << std::endl;
@@ -27,7 +27,7 @@
 Пример превращения случайной последовательности в слово:
 
     char buf[10] = "peetuux";         // на входе  1-2-слово
-    voreterator<2, 1> word (buf, 10); // требуем   2-1-слово
+    voreterator<2, 1> word (buf, 9); // требуем   2-1-слово
     std::cout << *word << std::endl;  // peftuvx - 2-1-слово
 
 Интерпейс:
